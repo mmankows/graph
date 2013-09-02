@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include "../lib/graph.h"
 
-//#include <sstream>
 
 
 Graph::Graph(const char* file_name)
@@ -76,7 +75,7 @@ return false;
 bool Graph::add_v(Vertex v,bool check)
 {
 if(check==true)
-if(this->has_vertex(v)) {std::cout<<"taki wierzcholek juz istnieje!"; return false;}
+if(this->has_vertex(v)) {std::cout<<"taki wierzcholek juz istnieje!\n"; return false;}
 vList.push_back(list<Vertex>()); //dodaje nowa pusta liste;
 
 bIt=vList.end();
@@ -84,7 +83,7 @@ bIt--; //ustawia na ostatni element
 
 bIt->push_front(v);//dodaje wierzcholek na poczatek ostatniej,nowej listy
                     // teraz lista ma tylko 1 bez powiazan
-std::cout<<bIt->size()<<"size\n";
+vnum++;
 return true;
 }
 
@@ -95,7 +94,7 @@ void Graph::print(const char* sep)
 for(bIt=vList.begin(); bIt != vList.end(); bIt++ )
 {
     for(sIt=bIt->begin(); sIt != bIt->end(); sIt++)
-    std::cout<<sIt->get_index()<<sep;
+    std::cout<<"("<<sIt->get_index()<<")"<<sep;
 
 std::cout<<std::endl;
 }
@@ -163,6 +162,7 @@ if(!(this->has_vertex(v))) {std::cout<<"nie ma takiego wierzcholka!";return Vert
 
 list<Vertex> tmp;
 Vertex tv(0);
+SmallIt tIt;
 
 for(bIt=vList.begin(); bIt != vList.end(); bIt++)
 {
@@ -177,9 +177,8 @@ this->vnum--;
 
 tv=*sIt; //zapamietujemy usuniety wierzcholek
 
-    for(sIt=tmp.begin(); sIt != tmp.end(); sIt++) //iteruje po liscie
-          del_e(*sIt,v,false);      //usuwa krawedzie z listy usunietego wierzcholka
-                
+    for(tIt=tmp.begin(),tIt++; tIt != tmp.end(); tIt++) //iteruje po liscie
+          del_e(v,*tIt,false);      //usuwa krawedzie z listy usunietego wierzcholkow
 
 return tv;
 }

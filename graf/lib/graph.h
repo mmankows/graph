@@ -17,9 +17,12 @@ SmallIt sIt;
 
 
 public:
+Graph() : vnum(0) {}
 Graph(const char* file_name);
 ~Graph();
+
 void print(const char* sep=" ");
+int size(void) { return vnum;}
 
 bool add_v(Vertex v,bool check=true);
 bool add_e(Vertex v1, Vertex v2,bool check=true);
