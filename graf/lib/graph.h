@@ -36,6 +36,7 @@ bool has_edge(Vertex v1,Vertex v2);
 Vertex del_v(Vertex v,bool check=true);
 bool del_e(Vertex v1, Vertex v2,bool check=true);
 
+BigIt contract(Vertex v1,Vertex v2);
 };
 
 

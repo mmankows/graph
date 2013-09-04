@@ -240,3 +240,44 @@ for(this->bIt=this->vList.begin(); *(bIt->begin()) != v && bIt != this->vList.en
 if(bIt==this->vList.end()) {std::cout<<"Brak szukanego vertexa w liscie\n"; }
 return bIt;
 }
+
+BigIt Graph::contract(Vertex v1, Vertex v2)
+{
+bIt = get_vlist(v2); //lista sasiadow usuwanego wierzcholka
+list<Vertex> tList = *bIt; 
+SmallIt tIt;
+
+
+tList.pop_front(); //usuwamy pierwszy wiercholek
+
+bIt->clear();
+this->vList.erase(bIt);
+this->vnum--;
+
+
+bIt = get_vlist(v1); 
+//laczymy liste sasiadow usunietego wiercholka z lista sasiadow pozostalego
+bIt->insert(bIt->end(),tList.begin(),tList.end()); 
+
+
+//wez kolejny z listy sasiadow usuwanego wierzcholka
+//idz do listy sasiada, zamien wszystkie wystapienia usunietego wiercholka
+//na nowy wierzcholek
+for(tIt = tList.begin(); tIt != tList.end(); tIt++)
+    for(bIt=get_vlist(*tIt); bIt !=this->vList.end(); bIt++)
+    {
+    if(*(bIt->begin()) == *tIt )
+        for(sIt=bIt->begin(); sIt!=bIt->end(); sIt++)
+        {
+        if(*sIt == v2)
+            *sIt = v1;
+        }
+    
+    }
+
+//remove selfloops
+for(bIt=get_vlist(v1),sIt=bIt->begin(); sIt != bIt->end(); sIt++)
+    if(*sIt == v1 && sIt!=bIt->begin())
+        sIt=bIt->erase(sIt);
+
+}
