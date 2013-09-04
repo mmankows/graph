@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
+#include <cctype>
 #include "../lib/graph.h"
 
 
@@ -11,30 +12,42 @@ Graph::Graph(const char* file_name)
 FILE *fptr;
 fptr=fopen(file_name,"r");
 
-char ch,buf[1024];
-int num;
+char buf[1024];
+
 
 while(fgets(buf,1024,fptr)) 
     this->vnum++;
 
+std::cout<<"wierzcholkow: "<<vnum<<"\n";
+
 rewind(fptr); //liczy wierzcholki(ile list przygotowac) i przewija plik;
 
 
-for(int i=0; i<this->vnum; i++)
-{
-vList.push_back(list<Vertex>());
-num--;
+for(int i=0; i<this->vnum; i++) vList.push_back(list<Vertex>());
+
+bIt = vList.begin();
+
+/////////////
+//perser////
+
+for(int i=0,num; i<this->vnum; i++,bIt++) //wczytuje powiazane wierzcholki
+{//do kolejnych list
+int where=0; //zmienna pamieta gdzie szukac w bufoze liczby
+fgets(buf,1024,fptr);
+    while(1)
+    {                        
+    while(isspace(buf[where]) && buf[where]!='\n') where++; //pomija biale znaki
+    if(buf[where]=='\n') break; 
+
+    sscanf(&buf[where],"%d",&num);
+    while(isdigit(buf[where])) where++; //przechodzi za kolejna liczbe
+    
+    bIt->push_back(Vertex(num));
+    }
+where=0;
 }
-
-bIt = vList.begin(); //ustawia iterator list na pierwsza pusta liste
-
-for(int i=0; i<this->vnum; i++,bIt++) //wczytuje powiazane wierzcholki
-do{                                   //do kolejnych list
-
-fscanf(fptr,"%d%c",&num,&ch);
-bIt->push_back(Vertex(num));
-
-}while(ch!='\n');
+/////////////////
+////////////////
 
 fclose(fptr);
 bIt=vList.begin();
@@ -45,16 +58,15 @@ sIt=bIt->begin();
 
 Graph::~Graph()
 {
+std::cout<<"usuwam graf...\n";
 bIt=vList.begin();
 
 while(bIt != vList.end()) 
 { //czysci 'male listy'
     bIt->clear();
     bIt++;
-    std::cout<<"usunałem mała liste!\n";
 }
 vList.clear(); //czysci duza liste
-std::cout<<"usunalem duza liste. koniec\n";
 
 }
 
@@ -219,6 +231,12 @@ for(bIt=vList.begin(); bIt!=vList.end() && done!=0; bIt++ )
     
     }
 
-
+return true;
 }
 
+BigIt Graph::get_vlist(Vertex v)
+{
+for(this->bIt=this->vList.begin(); *(bIt->begin()) != v && bIt != this->vList.end(); bIt++);
+if(bIt==this->vList.end()) {std::cout<<"Brak szukanego vertexa w liscie\n"; }
+return bIt;
+}

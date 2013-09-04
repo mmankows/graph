@@ -15,6 +15,8 @@ list<list<Vertex> > vList;
 BigIt bIt;
 SmallIt sIt;
 
+BigIt get_vlist(Vertex v); //zwraca iterator do listy powiazanej z 
+                            //wierzcholkiem v
 
 public:
 Graph() : vnum(0) {}
@@ -33,7 +35,6 @@ bool has_edge(Vertex v1,Vertex v2);
 
 Vertex del_v(Vertex v,bool check=true);
 bool del_e(Vertex v1, Vertex v2,bool check=true);
-
 
 };
 
