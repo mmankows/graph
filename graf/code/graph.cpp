@@ -58,7 +58,7 @@ sIt=bIt->begin();
 
 Graph::~Graph()
 {
-std::cout<<"usuwam graf...\n";
+//std::cout<<"usuwam graf...\n";
 bIt=vList.begin();
 
 while(bIt != vList.end()) 
@@ -210,7 +210,7 @@ int done=2;
 for(bIt=vList.begin(); bIt!=vList.end() && done!=0; bIt++ )
     {
     if( *(bIt->begin()) == v1)
-        for(sIt=bIt->begin(); sIt != bIt->end(); sIt++){
+        for(sIt=bIt->begin(),sIt++; sIt != bIt->end(); sIt++){
             if(*sIt == v2)
             {
             sIt=bIt->erase(sIt);
@@ -220,7 +220,7 @@ for(bIt=vList.begin(); bIt!=vList.end() && done!=0; bIt++ )
             }} //klamra niezbedna zeby ify sie nie gryzly
     
     else if( *(bIt->begin()) == v2)
-        for(sIt=bIt->begin(); sIt != bIt->end(); sIt++){
+        for(sIt=bIt->begin(),sIt++; sIt != bIt->end(); sIt++){
             if(*sIt == v1)
             {
             sIt=bIt->erase(sIt);
@@ -276,8 +276,10 @@ for(tIt = tList.begin(); tIt != tList.end(); tIt++)
     }
 
 //remove selfloops
-for(bIt=get_vlist(v1),sIt=bIt->begin(); sIt != bIt->end(); sIt++)
+del_e(v1,v1);
+/*for(bIt=get_vlist(v1),sIt=bIt->begin(); sIt != bIt->end(); sIt++)
     if(*sIt == v1 && sIt!=bIt->begin())
         sIt=bIt->erase(sIt);
-
+*/
+return get_vlist(v1);
 }

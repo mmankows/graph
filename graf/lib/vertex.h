@@ -8,6 +8,7 @@ int index;
 
 public:
 Vertex(int _index): index(_index) {}
+Vertex(void) : index(-1) {}
 ~Vertex() {}
 int get_index(void) {return index;}
 

@@ -15,16 +15,16 @@ list<list<Vertex> > vList;
 BigIt bIt;
 SmallIt sIt;
 
-BigIt get_vlist(Vertex v); //zwraca iterator do listy powiazanej z 
-                            //wierzcholkiem v
 
 public:
 Graph() : vnum(0) {}
 Graph(const char* file_name);
 ~Graph();
 
+
 void print(const char* sep=" ");
 int size(void) { return vnum;}
+int degree(Vertex v) { return get_vlist(v)->size()-1; }
 
 bool add_v(Vertex v,bool check=true);
 bool add_e(Vertex v1, Vertex v2,bool check=true);
@@ -37,6 +37,9 @@ Vertex del_v(Vertex v,bool check=true);
 bool del_e(Vertex v1, Vertex v2,bool check=true);
 
 BigIt contract(Vertex v1,Vertex v2);
+BigIt get_vlist(Vertex v); //zwraca iterator do listy powiazanej z v
+BigIt begin(void) { return vList.begin();}
+
 };
 
 
