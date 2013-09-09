@@ -1,0 +1,37 @@
+#include "../lib/fun.h"
+#include "../lib/graph.h"
+#include "../lib/vertex.h"
+#include <iostream>
+#include <cstdlib>
+
+
+
+int main()
+{
+
+Graph g("data/plik.txt");
+
+g.print("+");
+g.del_e(Vertex(2),Vertex(1));
+    
+g.print("-");
+/*Graph g1("data/kargerMinCut.txt");
+
+
+int min=g1.size()*g1.size(),last;
+for(int i=1; i<1000; ++i)
+{
+std::cout<<i<<". ";
+last=findMinCut(g1,i);
+std::cout<<last<<"\n";
+if(last<min) min=last;
+}
+
+std::cout<<"mincut size found: "<<min<<"\n\n";
+*/
+
+
+
+
+return 0;
+}

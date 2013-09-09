@@ -48,6 +48,8 @@ where=0;
 }
 /////////////////
 ////////////////
+for(int i=0; i<vnum; i++) vList[i].begin()->inspected() = 0;
+
 
 fclose(fptr);
 bIt=vList.begin();
@@ -58,7 +60,8 @@ sIt=bIt->begin();
 
 Graph::~Graph()
 {
-//std::cout<<"usuwam graf...\n";
+std::cout<<"destruktor bazowej...\n";
+//
 bIt=vList.begin();
 
 while(bIt != vList.end()) 
@@ -106,9 +109,9 @@ void Graph::print(const char* sep)
 for(bIt=vList.begin(); bIt != vList.end(); bIt++ )
 {
     for(sIt=bIt->begin(); sIt != bIt->end(); sIt++)
-    std::cout<<"("<<sIt->get_index()<<")"<<sep;
+    printf("%c%d%c%s",'(',sIt->get_index(),')',sep);
 
-std::cout<<std::endl;
+printf("\n");
 }
 
 }
@@ -234,12 +237,16 @@ for(bIt=vList.begin(); bIt!=vList.end() && done!=0; bIt++ )
 return true;
 }
 
+//--------------------------------------------------------------
+
 BigIt Graph::get_vlist(Vertex v)
 {
 for(this->bIt=this->vList.begin(); *(bIt->begin()) != v && bIt != this->vList.end(); bIt++);
 if(bIt==this->vList.end()) {std::cout<<"Brak szukanego vertexa w liscie\n"; }
-return bIt;
+return bIt;;
 }
+
+//------------------------------------------------------------------
 
 BigIt Graph::contract(Vertex v1, Vertex v2)
 {
@@ -282,4 +289,15 @@ del_e(v1,v1);
         sIt=bIt->erase(sIt);
 */
 return get_vlist(v1);
+}
+
+//----------------------------------------------------
+
+void Graph::show_order(void)
+{
+int k=1;
+BigIt eIt=vList.end();
+for(bIt=vList.begin(), sIt=bIt->begin(); 
+     bIt!=eIt; bIt++,k++,sIt=bIt->begin())
+    std::cout<<k<<"-"<<sIt->inspected()<<"\n";
 }
